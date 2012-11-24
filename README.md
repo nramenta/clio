@@ -56,24 +56,24 @@ This function prompts the user for input. Several options are available:
 - `required`: True if input is necessary, false otherwise.
 - `default`: If the user does not provide an input, this is the default value.
 - `pattern`: Regular expression pattern to match.
-- `validator`: Callable to validate input.
+- `validator`: Callable to validate input. Must return `true` or `false`.
 
 If an input error occurs, the prompt will repeat and will keep asking the user
 for input until it satisfies all the requirements in the `$options` array.
 
 ```php
 <?php
-Console::prompt('database host', ['default' => 'localhost']);
+$db_host = Console::prompt('database host', ['default' => 'localhost']);
 ```
 
 ### Console::confirm($text)
 
 Asks the user for a simple y/n answer. The answer can be `'y'`, `'n'`, `'Y'`, or
-`'N'`.
+`'N'`. Returns either `true` or `false`.
 
 ```php
 <?php
-Console::confirm('are you sure?');
+$sure = Console::confirm('are you sure?');
 ```
 
 ### Console::select($text, $options)
@@ -85,7 +85,9 @@ with their respective explanations.
 
 ```
 <?php
-Console::select('apply this patch?', ['y' => 'yes', 'n' => 'no', 'a' => 'all']);
+$opt = Console::select('apply this patch?',
+    ['y' => 'yes', 'n' => 'no', 'a' => 'all']
+);
 ```
 
 ### Console::work(Closure $callable)
@@ -99,7 +101,7 @@ process to the foreground process using the `socket_write()` function:
 ```php
 <?php
 Console::stdout('Working ... ');
-Console::work(function($socket) {
+Console::work(function($socket) { // $socket is optional, defaults to a spinner
     $n = 100;
     for ($i = 1; $i <= $n; $i++) {
         // do whatever it is you need to do
@@ -140,11 +142,12 @@ contain `pid` as the path to the PID file:
 <?php
 use Clio\Daemon;
 Daemon::work(array(
-        'pid' => __DIR__ . '/process.pid',
-        'stdout' => __DIR__ . '/stdout.txt', // optional, defaults to /dev/null
-        'stderr' => __DIR__ . '/stderr.txt', // optional, defaults to /dev/null
+        'pid'    => '/path/to/process.pid', // required
+        'stdin'  => '/dev/null',           // defaults to /dev/null
+        'stdout' => '/path/to/stdout.txt', // defaults to /dev/null
+        'stderr' => '/path/to/stderr.txt', // defaults to php://stdout
     ),
-    function($stdin, $stdout, $sterr) {
+    function($stdin, $stdout, $sterr) { // these parameters are optional
         while (true) {
             // do whatever it is daemons do
             sleep(1); // sleep is good for you
@@ -153,18 +156,21 @@ Daemon::work(array(
 );
 ```
 
-### Daemon::kill($pid, $delete = true)
+The PID file is an ordinary text file with the process ID as its only content.
+It is highly recommended to put a call to `sleep` to ease the system load.
+
+### Daemon::kill($pid, $delete = false)
 
 Kill a daemonized process:
 
 ```php
 <?php
 use Clio\Daemon;
-Daemon::kill('path/to/process.pid');
+Daemon::kill('/path/to/process.pid');
 ```
 
 If the second parameter is set to `true`, this function will try to delete the
-PID file after successfully sending the process a kill signal.
+PID file after successfully sending the process a kill signal. 
 
 ## Acknowledgments
 
