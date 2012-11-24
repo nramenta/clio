@@ -376,7 +376,7 @@ class Console
         $i = 0; $l = count($spinner);
         $delay = 100000;
 
-        $func = new ReflectionFunction($callable);
+        $func = new \ReflectionFunction($callable);
 
         $socket = (bool)$func->getNumberOfParameters();
 
