@@ -409,7 +409,7 @@ class Console
                     if ($status = socket_select($r, $w, $e, 0)) {
                         $data = socket_read($sockets[1], 4096, PHP_NORMAL_READ);
                         if ($data === false) {
-                            throw new Exception(
+                            throw new \Exception(
                                 sprintf(
                                     'Socket write error %s',
                                     socket_strerror(socket_last_error($sockets[1]))
