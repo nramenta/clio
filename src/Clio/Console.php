@@ -308,7 +308,7 @@ class Console
             static::output($options['error']);
             goto top;
         } elseif ($options['validator'] &&
-            !call_user_func_array($options['validator'], [$input, &$error])) {
+            !call_user_func_array($options['validator'], array($input, &$error))) {
             static::output(isset($error) ? $error : $options['error']);
             goto top;
         }
@@ -329,7 +329,7 @@ class Console
         $options = $options + array();
         top:
         $input = strtolower(static::input("$text [y/n]: "));
-        if (!in_array($input, ['y', 'n'])) goto top;
+        if (!in_array($input, array('y', 'n'))) goto top;
         return $input === 'y' ? true : false;
     }
 
@@ -372,7 +372,7 @@ class Console
      */
     public static function work(\Closure $callable)
     {
-        $spinner = ['|', '/', '-', '\\'];
+        $spinner = array('|', '/', '-', '\\');
         $i = 0; $l = count($spinner);
         $delay = 100000;
 
