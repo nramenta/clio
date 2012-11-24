@@ -217,7 +217,7 @@ class Console
     {
         if ($raw) {
             return fwrite(STDOUT, $text);
-        } elseif (posix_isatty(STDOUT)) {
+        } elseif (extension_loaded('posix') && posix_isatty(STDOUT)) {
             return fwrite(STDOUT, static::colorize($text));
         } else {
             return fwrite(STDOUT, static::decolorize($text));
@@ -236,7 +236,7 @@ class Console
     {
         if ($raw) {
             return fwrite(STDERR, $text);
-        } elseif (posix_isatty(STDERR)) {
+        } elseif (extension_loaded('posix') && posix_isatty(STDERR)) {
             return fwrite(STDERR, static::colorize($text));
         } else {
             return fwrite(STDERR, static::decolorize($text));
@@ -372,6 +372,14 @@ class Console
      */
     public static function work(\Closure $callable)
     {
+        if (!extension_loaded('pcntl')) {
+            throw new \Exception('pcntl extension required');
+        }
+
+        if (!extension_loaded('sockets')) {
+            throw new \Exception('sockets extension required');
+        }
+
         $spinner = array('|', '/', '-', '\\');
         $i = 0; $l = count($spinner);
         $delay = 100000;

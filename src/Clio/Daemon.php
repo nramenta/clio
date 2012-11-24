@@ -14,6 +14,14 @@ class Daemon
      */
     public static function work(array $options, \Closure $callable)
     {
+        if (!extension_loaded('pcntl')) {
+            throw new \Exception('pcntl extension required');
+        }
+
+        if (!extension_loaded('posix')) {
+            throw new \Exception('posix extension required');
+        }
+
         if (!isset($options['pid'])) {
             throw new \Exception('pid not specified');
         }
@@ -80,6 +88,10 @@ class Daemon
      */
     public static function kill($file, $delete = false)
     {
+        if (!extension_loaded('posix')) {
+            throw new \Exception('posix extension required');
+        }
+
         if (!is_readable($file)) {
             throw new \Exception('unreadable pid file ' . $file);
         }
