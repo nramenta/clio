@@ -18,7 +18,8 @@ composer.json configuration is:
 ```
 
 PHP 5.3.2 or newer is required; PHP 5.4 is strongly recommended. This library is
-developed on and is meant to be used on POSIX systems.
+developed on and is meant to be used on POSIX systems with the posix, pcntl, and
+sockets extensions loaded.
 
 ## Console
 
