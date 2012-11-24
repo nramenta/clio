@@ -190,7 +190,7 @@ class Console
      */
     public static function strip($text)
     {
-        return preg_replace('/\033\[[\d+;]+m/', '', $string);
+        return preg_replace('/\033\[(\d+)(;\d+)*m/', '', $text);
     }
 
     /**
