@@ -83,7 +83,7 @@ key-value pairs of input and explanation. The `'?'` input option is appended
 automatically and it serves as the help option showing all other options along
 with their respective explanations.
 
-```
+```php
 <?php
 $opt = Console::select('apply this patch?',
     ['y' => 'yes', 'n' => 'no', 'a' => 'all']
