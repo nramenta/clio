@@ -419,7 +419,7 @@ class Console
                         if ($data === false) {
                             throw new \Exception(
                                 sprintf(
-                                    'Socket write error %s',
+                                    'socket write error %s',
                                     socket_strerror(socket_last_error($sockets[1]))
                                 )
                             );
