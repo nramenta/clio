@@ -244,6 +244,19 @@ class Console
     }
 
     /**
+     * Prints text to STDERR appended with a PHP_EOL.
+     *
+     * @param string $text
+     * @param bool   $raw
+     *
+     * @return int|false Number of bytes printed or false on error
+     */
+    public static function error($text = null, $raw = false)
+    {
+        return static::stderr($text . PHP_EOL, $raw);
+    }
+
+    /**
      * Asks the user for input. Ends when the user types a PHP_EOL. Optionally
      * provide a prompt.
      *
