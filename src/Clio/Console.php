@@ -320,13 +320,11 @@ class Console
      * Asks the user for a simple yes/no confirmation.
      *
      * @param string $text    Prompt string
-     * @param array  $options Set of options
      *
      * @return bool Either true or false
      */
-    public static function confirm($text, $options = array())
+    public static function confirm($text)
     {
-        $options = $options + array();
         top:
         $input = strtolower(static::input("$text [y/n]: "));
         if (!in_array($input, array('y', 'n'))) goto top;
