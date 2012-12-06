@@ -50,6 +50,10 @@ The same as `Console::stdout` except it automatically appends a `PHP_EOL`.
 
 Behaves like `Console::stdout` except it's for STDERR.
 
+### Console::error($text, $raw = false)
+
+The same as `Console::stderr` except it automatically appends a `PHP_EOL`.
+
 ### Console::prompt($text, $options)
 
 This function prompts the user for input. Several options are available:
@@ -60,7 +64,8 @@ This function prompts the user for input. Several options are available:
 - `validator`: Callable to validate input. Must return `true` or `false`.
 
 If an input error occurs, the prompt will repeat and will keep asking the user
-for input until it satisfies all the requirements in the `$options` array.
+for input until it satisfies all the requirements in the `$options` array. Note
+that if you supply a `default` option, `required` is not enforced.
 
 ```php
 <?php
@@ -158,7 +163,8 @@ Daemon::work(array(
 ```
 
 The PID file is an ordinary text file with the process ID as its only content.
-It is highly recommended to put a call to `sleep` to ease the system load.
+It will be created by the library automatically if it doesn't exist. It is
+highly recommended to put a call to `sleep` to ease the system load.
 
 ### Daemon::kill($pid, $delete = false)
 
