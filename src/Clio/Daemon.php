@@ -34,7 +34,7 @@ class Daemon
 
         $lock = fopen($options['pid'], 'c+');
         if (!flock($lock, LOCK_EX | LOCK_NB)) {
-            throw new \Exception('could not acquire lock for ' . $pid);
+            throw new \Exception('could not acquire lock for ' . $options['pid']);
         }
 
         switch ($pid = pcntl_fork()) {
