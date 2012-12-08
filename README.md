@@ -139,6 +139,20 @@ symbol, simply put two `%` characters.
 
 The Daemon class provides helpers for starting and killing daemonized processes.
 
+### Daemon::isRunning($pid)
+
+Tests if a daemon is currently running or not. Returns true or false:
+
+```php
+<?php
+use Clio\Daemon;
+if (Daemon::isRunning('/path/to/process.pid')) {
+    echo "daemon is running.\n";
+} else {
+    echo "daemon is not running.\n";
+}
+```
+
 ### Daemon::work(array $options, Closure $callable)
 
 Daemonize a `$callable` Closure object. The `$options` key-value array must
@@ -147,19 +161,24 @@ contain `pid` as the path to the PID file:
 ```php
 <?php
 use Clio\Daemon;
-Daemon::work(array(
-        'pid'    => '/path/to/process.pid', // required
-        'stdin'  => '/dev/null',            // defaults to /dev/null
-        'stdout' => '/path/to/stdout.txt',  // defaults to /dev/null
-        'stderr' => '/path/to/stderr.txt',  // defaults to php://stdout
-    ),
-    function($stdin, $stdout, $sterr) { // these parameters are optional
-        while (true) {
-            // do whatever it is daemons do
-            sleep(1); // sleep is good for you
+if (Daemon::isRunning('/path/to/process.pid')) {
+    echo "daemon is already running.\n";
+} else {
+    Daemon::work(array(
+            'pid'    => '/path/to/process.pid', // required
+            'stdin'  => '/dev/null',            // defaults to /dev/null
+            'stdout' => '/path/to/stdout.txt',  // defaults to /dev/null
+            'stderr' => '/path/to/stderr.txt',  // defaults to php://stdout
+        ),
+        function($stdin, $stdout, $sterr) { // these parameters are optional
+            while (true) {
+                // do whatever it is daemons do
+                sleep(1); // sleep is good for you
+            }
         }
-    }
-);
+    );
+    echo "daemon is now running.\n";
+}
 ```
 
 The PID file is an ordinary text file with the process ID as its only content.
@@ -173,7 +192,17 @@ Kill a daemonized process:
 ```php
 <?php
 use Clio\Daemon;
-Daemon::kill('/path/to/process.pid');
+
+if (Daemon::isRunning('/path/to/process.pid')) {
+    echo "killing running daemon ...\n";
+    if (Daemon::kill('/path/to/process.pid')) {
+        echo "daemon killed.\n";
+    } else {
+        echo "failed killing daemon.\n";
+    }
+} else {
+    echo "nothing to kill.\n";
+}
 ```
 
 If the second parameter is set to `true`, this function will try to delete the

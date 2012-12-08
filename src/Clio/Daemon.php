@@ -81,6 +81,28 @@ class Daemon
         call_user_func($callable, $stdin, $stdout, $stderr);
     }
 
+    public static function isRunning($file)
+    {
+        if (!extension_loaded('posix')) {
+            throw new \Exception('posix extension required');
+        }
+
+        if (!is_readable($file)) {
+            return false;
+        }
+
+        if (($lock = @fopen($file, 'c+')) === false) {
+            throw new \Exception('unable to open pid file ' . $file);
+        }
+
+        if (flock($lock, LOCK_EX | LOCK_NB)) {
+            return false;
+        } else {
+            flock($lock, LOCK_UN);
+            return true;
+        }
+    }
+
     /**
      * Kills a daemon process specified by its PID file.
      *
