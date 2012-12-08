@@ -32,7 +32,10 @@ class Daemon
             'stderr' => 'php://stdout',
         );
 
-        $lock = fopen($options['pid'], 'c+');
+        if (($lock = @fopen($options['pid'], 'c+')) === false) {
+            throw new \Exception('unable to open pid file ' . $file);
+        }
+
         if (!flock($lock, LOCK_EX | LOCK_NB)) {
             throw new \Exception('could not acquire lock for ' . $options['pid']);
         }
@@ -96,7 +99,9 @@ class Daemon
             throw new \Exception('unreadable pid file ' . $file);
         }
 
-        $lock = fopen($file, 'c+');
+        if (($lock = @fopen($file, 'c+')) === false) {
+            throw new \Exception('unable to open pid file ' . $file);
+        }
 
         if (flock($lock, LOCK_EX | LOCK_NB)) {
             throw new \Exception('process not running');
