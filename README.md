@@ -149,9 +149,9 @@ contain `pid` as the path to the PID file:
 use Clio\Daemon;
 Daemon::work(array(
         'pid'    => '/path/to/process.pid', // required
-        'stdin'  => '/dev/null',           // defaults to /dev/null
-        'stdout' => '/path/to/stdout.txt', // defaults to /dev/null
-        'stderr' => '/path/to/stderr.txt', // defaults to php://stdout
+        'stdin'  => '/dev/null',            // defaults to /dev/null
+        'stdout' => '/path/to/stdout.txt',  // defaults to /dev/null
+        'stderr' => '/path/to/stderr.txt',  // defaults to php://stdout
     ),
     function($stdin, $stdout, $sterr) { // these parameters are optional
         while (true) {
