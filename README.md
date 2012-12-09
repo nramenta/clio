@@ -28,13 +28,13 @@ The Console class provides helpers for interactive command line input/output.
 ### Console::stdout($text, $raw = false)
 
 Prints `$text` to STDOUT. The text can contain text color and style specifiers.
-This method detects whether the text is to be sent out to STDOUT or to a file
+This method detects whether the text is to be sent out to TTY or to a file
 through the use of shell redirection and acts accordingly, in the case of the
 latter, by stripping the text of all color and style specifiers.
 
 If the second parameter is set to true, then it will print `$text` as is with
 all text color and style specifiers intact regardless of whether it's printing
-to STDOUT or to a file.
+to TTY or to a file.
 
 ```php
 <?php
@@ -170,7 +170,7 @@ if (Daemon::isRunning('/path/to/process.pid')) {
             'stdout' => '/path/to/stdout.txt',  // defaults to /dev/null
             'stderr' => '/path/to/stderr.txt',  // defaults to php://stdout
         ),
-        function($stdin, $stdout, $sterr) { // these parameters are optional
+        function($stdin, $stdout, $stderr) { // these parameters are optional
             while (true) {
                 // do whatever it is daemons do
                 sleep(1); // sleep is good for you
