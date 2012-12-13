@@ -126,6 +126,7 @@ class Daemon
         }
 
         if (flock($lock, LOCK_EX | LOCK_NB)) {
+            flock($lock, LOCK_UN);
             throw new \Exception('process not running');
         }
 
