@@ -310,10 +310,10 @@ class Console
             $input = static::input("$text: ");
         }
 
-        if ($options['required'] && !strlen($input)) {
+        if (!strlen($input)) {
             if (isset($options['default'])) {
                 $input = $options['default'];
-            } else {
+            } elseif ($options['required']) {
                 static::output($options['error']);
                 goto top;
             }
