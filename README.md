@@ -62,6 +62,7 @@ This function prompts the user for input. Several options are available:
 - `default`: If the user does not provide an input, this is the default value.
 - `pattern`: Regular expression pattern to match.
 - `validator`: Callable to validate input. Must return `true` or `false`.
+- `error`: Default error message.
 
 If an input error occurs, the prompt will repeat and will keep asking the user
 for input until it satisfies all the requirements in the `$options` array. Note
@@ -71,6 +72,26 @@ that if you supply a `default` option, `required` is not enforced.
 <?php
 $db_host = Console::prompt('database host', ['default' => 'localhost']);
 ```
+
+If you provide your own validator callable, you can pass a custom error message
+to the second parameter:
+
+```php
+<?php
+$file = Console::prompt('File', [
+    'required' => true,
+    'validator' => function($input, &$error = null) {
+        if (is_readable($input)) {
+            return true;
+        } else {
+            $error = 'Path given is not a readable file';
+            return false;
+        }
+    }
+]);
+```
+
+Note that for this to work, the second parameter must be declared a reference.
 
 ### Console::confirm($text)
 
