@@ -206,6 +206,23 @@ class Console
     }
 
     /**
+     * Asks the user for input. Ends when the user types a PHP_EOL. Optionally
+     * provide a prompt.
+     *
+     * @param string $prompt String prompt (optional)
+     * @param bool   $raw If set to true, returns the raw string without trimming
+     *
+     * @return string User input
+     */
+    public static function input($prompt = null, $raw = false)
+    {
+        if (isset($prompt)) {
+            static::stdout($prompt);
+        }
+        return static::stdin($raw);
+    }
+
+    /**
      * Prints text to STDOUT.
      *
      * @param string $text String to write to STDOUT
@@ -222,6 +239,19 @@ class Console
         } else {
             return fwrite(STDOUT, static::decolorize($text));
         }
+    }
+
+    /**
+     * Prints text to STDOUT appended with a PHP_EOL.
+     *
+     * @param string $text String to write to STDOUT
+     * @param bool   $raw  Write string as-is; defaults to false
+     *
+     * @return int|false Number of bytes printed or false on error
+     */
+    public static function output($text = null, $raw = false)
+    {
+        return static::stdout($text . PHP_EOL, $raw);
     }
 
     /**
@@ -254,36 +284,6 @@ class Console
     public static function error($text = null, $raw = false)
     {
         return static::stderr($text . PHP_EOL, $raw);
-    }
-
-    /**
-     * Asks the user for input. Ends when the user types a PHP_EOL. Optionally
-     * provide a prompt.
-     *
-     * @param string $prompt String prompt (optional)
-     * @param bool   $raw If set to true, returns the raw string without trimming
-     *
-     * @return string User input
-     */
-    public static function input($prompt = null, $raw = false)
-    {
-        if (isset($prompt)) {
-            static::stdout($prompt);
-        }
-        return static::stdin($raw);
-    }
-
-    /**
-     * Prints text to STDOUT appended with a PHP_EOL.
-     *
-     * @param string $text String to write to STDOUT
-     * @param bool   $raw  Write string as-is; defaults to false
-     *
-     * @return int|false Number of bytes printed or false on error
-     */
-    public static function output($text = null, $raw = false)
-    {
-        return static::stdout($text . PHP_EOL, $raw);
     }
 
     /**
