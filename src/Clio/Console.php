@@ -208,8 +208,8 @@ class Console
     /**
      * Prints text to STDOUT.
      *
-     * @param string $text
-     * @param bool   $raw
+     * @param string $text String to write to STDOUT
+     * @param bool   $raw  Write string as-is; defaults to false
      *
      * @return int|false Number of bytes printed or false on error
      */
@@ -227,8 +227,8 @@ class Console
     /**
      * Prints text to STDERR.
      *
-     * @param string $text
-     * @param bool   $raw
+     * @param string $text String to write to STDERR
+     * @param bool   $raw  Write string as-is; defaults to false
      *
      * @return int|false Number of bytes printed or false on error
      */
@@ -246,8 +246,8 @@ class Console
     /**
      * Prints text to STDERR appended with a PHP_EOL.
      *
-     * @param string $text
-     * @param bool   $raw
+     * @param string $text String to write to STDERR
+     * @param bool   $raw  Write string as-is; defaults to false
      *
      * @return int|false Number of bytes printed or false on error
      */
@@ -276,8 +276,8 @@ class Console
     /**
      * Prints text to STDOUT appended with a PHP_EOL.
      *
-     * @param string $text
-     * @param bool   $raw
+     * @param string $text String to write to STDOUT
+     * @param bool   $raw  Write string as-is; defaults to false
      *
      * @return int|false Number of bytes printed or false on error
      */
@@ -333,7 +333,7 @@ class Console
     /**
      * Asks the user for a simple yes/no confirmation.
      *
-     * @param string $text    Prompt string
+     * @param string $text Prompt string
      *
      * @return bool Either true or false
      */
