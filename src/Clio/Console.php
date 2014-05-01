@@ -261,15 +261,16 @@ class Console
      * provide a prompt.
      *
      * @param string $prompt String prompt (optional)
+     * @param bool   $raw If set to true, returns the raw string without trimming
      *
      * @return string User input
      */
-    public static function input($prompt = null)
+    public static function input($prompt = null, $raw = false)
     {
         if (isset($prompt)) {
             static::stdout($prompt);
         }
-        return static::stdin();
+        return static::stdin($raw);
     }
 
     /**

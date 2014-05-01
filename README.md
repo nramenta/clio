@@ -30,10 +30,11 @@ The Console class provides helpers for interactive command line input/output.
 Waits for user input. If `$raw` is set to `true`, returns the input without
 right trimming for `PHP_EOL`.
 
-### Console::input($prompt = null)
+### Console::input($prompt = null, $raw = false)
 
 Asks the user for input which ends when the user types a `PHP_EOL` character.
-You can optionally provide a prompt string.
+You can optionally provide a prompt string. If `$raw` is set to `true`, returns
+the input without right trimming for `PHP_EOL`. 
 
 ### Console::stdout($text, $raw = false)
 
