@@ -25,6 +25,16 @@ sockets extensions loaded.
 
 The Console class provides helpers for interactive command line input/output.
 
+### Console::stdin($raw = false)
+
+Waits for user input. If `$raw` is set to `true`, returns the input without
+right trimming for `PHP_EOL`.
+
+### Console::input($prompt = null)
+
+Asks the user for input which ends when the user types a `PHP_EOL` character.
+You can optionally provide a prompt string.
+
 ### Console::stdout($text, $raw = false)
 
 Prints `$text` to STDOUT. The text can contain text color and style specifiers.
