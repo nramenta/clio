@@ -164,8 +164,32 @@ Console::output('this is %rcolored%n and %Bstyled%n');
 
 The `%n` specifier normalizes the color and style of the text to that of the
 shell's defaults. This specifier is taken from PEAR's Console_Color package.
-Consult the source code for the full set of specifiers. To print a percentage
-symbol, simply put two `%` characters.
+To print a percentage symbol, simply put two `%` characters. The following is
+the full set of specifiers:
+
+```
+            text      text            background
+------------------------------------------------
+%k %K %0    black     dark grey       black
+%r %R %1    red       bold red        red
+%g %G %2    green     bold green      green
+%y %Y %3    yellow    bold yellow     yellow
+%b %B %4    blue      bold blue       blue
+%m %M %5    magenta   bold magenta    magenta
+%p %P       magenta (think: purple)
+%c %C %6    cyan      bold cyan       cyan
+%w %W %7    white     bold white      white
+
+%F     Blinking, Flashing
+%U     Underline
+%8     Reverse
+%_,%9  Bold
+
+%n     Resets the color
+%%     A single %
+```
+
+You can use these specifiers with methods that takes a string and outputs it.
 
 ## Daemon
 
