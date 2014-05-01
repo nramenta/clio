@@ -81,6 +81,13 @@ class Daemon
         call_user_func($callable, $stdin, $stdout, $stderr);
     }
 
+    /**
+     * Checks whether a daemon process specified by its PID file is running.
+     *
+     * @param string $file   Daemon PID file
+     *
+     * @return bool True if the daemon is still running, false otherwise
+     */
     public static function isRunning($file)
     {
         if (!extension_loaded('posix')) {
