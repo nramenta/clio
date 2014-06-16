@@ -7,6 +7,8 @@ class Daemon
     /**
      * Daemonize a Closure object.
      *
+     * @throws \Exception
+     *
      * @param array $options    Set of options
      * @param callable $callable Closure object to daemonize
      *
@@ -84,6 +86,8 @@ class Daemon
     /**
      * Checks whether a daemon process specified by its PID file is running.
      *
+     * @throws \Exception
+     *
      * @param string $file   Daemon PID file
      *
      * @return bool True if the daemon is still running, false otherwise
@@ -112,6 +116,8 @@ class Daemon
 
     /**
      * Kills a daemon process specified by its PID file.
+     *
+     * @throws \Exception
      *
      * @param string $file   Daemon PID file
      * @param bool   $delete Flag to delete PID file after killing

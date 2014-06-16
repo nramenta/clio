@@ -378,6 +378,8 @@ class Console
      * the return value of the background process, or false if the process fork
      * failed.
      *
+     * @throws \Exception
+     *
      * @param Closure $callable Closure object
      *
      * @return int|false Process exit status
