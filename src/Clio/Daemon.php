@@ -8,11 +8,11 @@ class Daemon
      * Daemonize a Closure object.
      *
      * @param array $options    Set of options
-     * @param Closure $callable Closure object to daemonize
+     * @param callable $callable Closure object to daemonize
      *
      * @return bool True on success, throws an Exception otherwise
      */
-    public static function work(array $options, \Closure $callable)
+    public static function work(array $options, callable $callable)
     {
         if (!extension_loaded('pcntl')) {
             throw new \Exception('pcntl extension required');
