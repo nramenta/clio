@@ -52,7 +52,7 @@ class Daemon
             ftruncate($lock, 0);
             fwrite($lock ,$pid);
             fflush($lock);
-            return true;
+            return;
         }
 
         if (posix_setsid() === -1) {
