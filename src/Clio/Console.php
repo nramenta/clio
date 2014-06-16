@@ -380,11 +380,11 @@ class Console
      *
      * @throws \Exception
      *
-     * @param Closure $callable Closure object
+     * @param callable $callable Closure object
      *
      * @return int|false Process exit status
      */
-    public static function work(\Closure $callable)
+    public static function work(callable $callable)
     {
         if (!extension_loaded('pcntl')) {
             throw new \Exception('pcntl extension required');
