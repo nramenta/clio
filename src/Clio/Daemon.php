@@ -33,7 +33,7 @@ class Daemon
         );
 
         if (($lock = @fopen($options['pid'], 'c+')) === false) {
-            throw new \Exception('unable to open pid file ' . $file);
+            throw new \Exception('unable to open pid file ' . $options['pid']);
         }
 
         if (!flock($lock, LOCK_EX | LOCK_NB)) {
