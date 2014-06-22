@@ -12,14 +12,13 @@ composer.json configuration is:
 ```
 {
     "require": {
-        "clio/clio": "@stable"
+        "clio/clio": "0.1.8"
     }
 }
 ```
 
-PHP 5.3.2 or newer is required; PHP 5.4 is strongly recommended. This library is
-developed on and is meant to be used on POSIX systems with the posix, pcntl, and
-sockets extensions loaded.
+PHP 5.4 is required. This library is developed on and is meant to be used on
+POSIX systems with the posix, pcntl, and sockets extensions loaded.
 
 ## Console
 
@@ -128,7 +127,7 @@ $opt = Console::select('apply this patch?',
 );
 ```
 
-### Console::work(Closure $callable)
+### Console::work(callable $callable)
 
 Forks another process to run `$callable` in the background while showing status
 updates to the standard output. By default the status update is a simple spinner
@@ -209,9 +208,9 @@ if (Daemon::isRunning('/path/to/process.pid')) {
 }
 ```
 
-### Daemon::work(array $options, Closure $callable)
+### Daemon::work(array $options, callable $callable)
 
-Daemonize a `$callable` Closure object. The `$options` key-value array must
+Daemonize a `$callable` callable object. The `$options` key-value array must
 contain `pid` as the path to the PID file:
 
 ```php
