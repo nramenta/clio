@@ -7,12 +7,14 @@ class Daemon
     /**
      * Daemonize a Closure object.
      *
+     * @throws \Exception
+     *
      * @param array $options    Set of options
-     * @param Closure $callable Closure object to daemonize
+     * @param callable $callable Closure object to daemonize
      *
      * @return bool True on success, throws an Exception otherwise
      */
-    public static function work(array $options, \Closure $callable)
+    public static function work(array $options, callable $callable)
     {
         if (!extension_loaded('pcntl')) {
             throw new \Exception('pcntl extension required');
@@ -33,7 +35,7 @@ class Daemon
         );
 
         if (($lock = @fopen($options['pid'], 'c+')) === false) {
-            throw new \Exception('unable to open pid file ' . $file);
+            throw new \Exception('unable to open pid file ' . $options['pid']);
         }
 
         if (!flock($lock, LOCK_EX | LOCK_NB)) {
@@ -50,7 +52,7 @@ class Daemon
             ftruncate($lock, 0);
             fwrite($lock ,$pid);
             fflush($lock);
-            return true;
+            return;
         }
 
         if (posix_setsid() === -1) {
@@ -84,6 +86,8 @@ class Daemon
     /**
      * Checks whether a daemon process specified by its PID file is running.
      *
+     * @throws \Exception
+     *
      * @param string $file   Daemon PID file
      *
      * @return bool True if the daemon is still running, false otherwise
@@ -112,6 +116,8 @@ class Daemon
 
     /**
      * Kills a daemon process specified by its PID file.
+     *
+     * @throws \Exception
      *
      * @param string $file   Daemon PID file
      * @param bool   $delete Flag to delete PID file after killing

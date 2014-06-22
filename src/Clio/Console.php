@@ -378,11 +378,13 @@ class Console
      * the return value of the background process, or false if the process fork
      * failed.
      *
-     * @param Closure $callable Closure object
+     * @throws \Exception
+     *
+     * @param callable $callable Closure object
      *
      * @return int|false Process exit status
      */
-    public static function work(\Closure $callable)
+    public static function work(callable $callable)
     {
         if (!extension_loaded('pcntl')) {
             throw new \Exception('pcntl extension required');
