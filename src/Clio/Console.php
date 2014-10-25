@@ -348,17 +348,20 @@ class Console
     /**
      * Gives the user an option to choose from. Giving '?' as an input will show
      * a list of options to choose from and their explanations.
+     * If no input is given, the function does ask again.
      *
      * @param string $text    Prompt string
      * @param array  $options Key-value array of options to choose from
+     * @param string $returntype select if function should return the key or the value from the options-array
      *
      * @return string An option character the user chose
      */
-    public static function select($text, $options = array())
+    public static function select($text, $options = array(), $returntype = 'key')
     {
         top:
         static::stdout("$text [" . implode(',', array_keys($options)) . ",?]: ");
         $input = static::stdin();
+        if (!$input) {goto top;}
         if ($input === '?') {
             foreach ($options as $key => $value) {
                 echo " $key - $value\n";
@@ -366,7 +369,16 @@ class Console
             echo " ? - Show help\n";
             goto top;
         } elseif (!in_array($input, array_keys($options))) goto top;
-        return $input;
+        
+        if ($returntype === 'key') {
+        	return $input;
+        	}
+        elseif ($returntype === 'value') {
+        	$value = $options[$input];
+        	return $value;
+        }
+        
+        
     }
 
     /**
